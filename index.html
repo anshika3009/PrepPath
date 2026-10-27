@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A student-friendly placement preparation portal with jobs, quizzes and interview questions.">
+  <title>PrepPath | Student Placement Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="PrepPath home"><span class="brand-mark">P</span> PrepPath</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#jobs" class="nav-link">Jobs</a>
+      <a href="#quiz" class="nav-link">Aptitude Quiz</a>
+      <a href="#interview" class="nav-link">Interview Prep</a>
+      <a href="#progress" class="nav-link">My Progress</a>
+    </nav>
+    <a class="top-cta" href="#quiz">Start Practicing <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> YOUR PLACEMENT JOURNEY STARTS HERE</div>
+        <h1>Prepare today.<br><span>Get placed tomorrow.</span></h1>
+        <p class="hero-text">A simple space to explore opportunities, practice aptitude and build confidence for your next interview.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#quiz">Practice a quiz <span>→</span></a>
+          <a class="btn btn-secondary" href="#jobs">Explore opportunities</a>
+        </div>
+        <div class="hero-note"><span class="avatar-stack"><i>A</i><i>S</i><i>+</i></span><span><strong>One step at a time.</strong><br>Small practice. Better confidence.</span></div>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+        <div class="visual-card main-visual-card">
+          <div class="visual-card-top"><span class="tiny-label">YOUR WEEKLY GOAL</span><span class="status-dot">● On track</span></div>
+          <h3>Placement readiness</h3>
+          <div class="readiness-number"><strong id="heroProgress">0%</strong><span>completed</span></div>
+          <div class="progress-track"><span id="heroProgressBar" style="width:0%"></span></div>
+          <div class="visual-stats"><div><span class="stat-icon purple">✓</span><span><b id="heroTasks">0/5</b><small>Topics done</small></span></div><div><span class="stat-icon mint">✦</span><span><b id="heroQuizScore">—</b><small>Latest quiz</small></span></div></div>
+        </div>
+        <div class="floating-chip chip-top"><span class="chip-icon">✦</span><span><b>Keep learning</b><small>Your future self says thanks</small></span></div>
+        <div class="floating-chip chip-bottom"><span class="chip-icon green">✓</span><span><b>Progress saved</b><small>Right in your browser</small></span></div>
+        <div class="hero-spark spark-one">✳</div><div class="hero-spark spark-two">✦</div>
+      </div>
+    </section>
+
+    <section class="section quick-stats" aria-label="Portal overview">
+      <div class="quick-stat"><span class="quick-icon lavender">▤</span><div><strong>Explore</strong><small>Jobs & internships</small></div></div>
+      <div class="quick-stat"><span class="quick-icon peach">◎</span><div><strong>Practice</strong><small>Aptitude questions</small></div></div>
+      <div class="quick-stat"><span class="quick-icon mint">⌘</span><div><strong>Prepare</strong><small>Interview topics</small></div></div>
+      <div class="quick-stat"><span class="quick-icon blue">↗</span><div><strong>Improve</strong><small>Track your progress</small></div></div>
+    </section>
+
+    <section class="section section-block" id="jobs">
+      <div class="section-heading">
+        <div><div class="eyebrow">FIND YOUR NEXT STEP</div><h2>Explore opportunities</h2><p>Sample listings to help you understand what employers look for.</p></div>
+        <span class="section-count" id="jobCount">6 opportunities</span>
+      </div>
+      <div class="filter-row">
+        <label class="search-box"><span>⌕</span><input type="search" id="jobSearch" placeholder="Search role or company..." aria-label="Search jobs"></label>
+        <select id="jobTypeFilter" aria-label="Filter job type"><option value="all">All opportunities</option><option value="Internship">Internships</option><option value="Fresher">Fresher roles</option></select>
+      </div>
+      <div class="jobs-grid" id="jobsGrid"></div>
+      <p class="disclaimer">Demo content for academic use. Verify every vacancy and eligibility requirement on the employer's official website before applying.</p>
+    </section>
+
+    <section class="section section-block quiz-section" id="quiz">
+      <div class="section-heading">
+        <div><div class="eyebrow">A LITTLE PRACTICE GOES A LONG WAY</div><h2>Quick aptitude challenge</h2><p>Try these questions and see how you do. No pressure—learn as you go.</p></div>
+        <div class="quiz-pill">⏱ <span id="quizTimer">Untimed</span></div>
+      </div>
+      <div class="quiz-layout">
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-topline"><span id="questionCounter">QUESTION 1 OF 5</span><span class="difficulty">BEGINNER</span></div>
+          <div class="quiz-progress-track"><span id="quizProgressBar"></span></div>
+          <h3 id="questionText">Loading question…</h3>
+          <div class="options-list" id="optionsList"></div>
+          <div class="quiz-footer"><span id="answerHint">Choose one answer</span><button class="btn btn-primary" id="nextQuestion" disabled>Next question →</button></div>
+        </div>
+        <aside class="quiz-side">
+          <div class="side-illustration">✎</div><h3>Practice makes progress.</h3><p>Answer each question, review your result and try again whenever you want.</p><div class="mini-metric"><span>Questions in this quiz</span><strong>05</strong></div><div class="mini-metric"><span>Best score saved</span><strong id="bestScore">—</strong></div>
+        </aside>
+      </div>
+      <div class="quiz-result hidden" id="quizResult" aria-live="polite"></div>
+    </section>
+
+    <section class="section section-block" id="interview">
+      <div class="section-heading">
+        <div><div class="eyebrow">GET READY TO SPEAK WITH CONFIDENCE</div><h2>Interview preparation</h2><p>Browse beginner-friendly questions by topic. Tap a question to reveal its answer.</p></div>
+      </div>
+      <div class="topic-tabs" id="topicTabs"><button class="topic-tab active" data-topic="All">All topics</button><button class="topic-tab" data-topic="Web Development">Web Development</button><button class="topic-tab" data-topic="JavaScript">JavaScript</button><button class="topic-tab" data-topic="SQL">SQL</button><button class="topic-tab" data-topic="HR">HR</button></div>
+      <div class="interview-list" id="interviewList"></div>
+    </section>
+
+    <section class="section section-block progress-section" id="progress">
+      <div class="section-heading">
+        <div><div class="eyebrow">YOUR GROWTH, YOUR PACE</div><h2>My preparation tracker</h2><p>Tick off each step as you complete it. Your progress is saved on this device.</p></div>
+        <button class="btn btn-secondary reset-btn" id="resetProgress">Reset progress</button>
+      </div>
+      <div class="progress-layout">
+        <div class="tracker-card"><div class="tracker-heading"><div><h3>Placement checklist</h3><p>Build a little momentum every day.</p></div><strong id="progressLabel">0%</strong></div><div class="progress-track large"><span id="progressBar"></span></div><div class="checklist" id="checklist"></div></div>
+        <div class="motivation-card"><div class="motivation-star">✦</div><div class="eyebrow">A REMINDER FOR YOU</div><h3>You don't have to know everything. You just have to keep learning.</h3><p>Consistency beats last-minute stress. Celebrate every small win.</p><span class="motivation-sign">— Your PrepPath buddy</span></div>
+      </div>
+    </section>
+
+    <section class="bottom-cta section"><div><div class="eyebrow">READY FOR YOUR NEXT STEP?</div><h2>Your future is built one skill at a time.</h2><p>Choose a topic, practice a question and keep moving forward.</p></div><a href="#quiz" class="btn btn-light">Take a quick quiz ↗</a></section>
+  </main>
+
+  <footer class="footer"><a class="brand" href="#home"><span class="brand-mark">P</span> PrepPath</a><p>A student placement preparation mini project built with HTML, CSS & JavaScript.</p><span>Made for learning · © <span id="year"></span> PrepPath</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
