@@ -1,117 +1,1043 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A student-friendly placement preparation portal with jobs, quizzes and interview questions.">
-  <title>PrepPath | Student Placement Portal</title>
+  <meta name="description" content="PrepPath Pro — Interactive Student Placement Preparation Portal with Adaptive Quizzes, Mock Interview Simulator, Job Application Tracker, ATS Resume Checker, and Cheat Sheets.">
+  <title>PrepPath Pro | Interactive Placement Preparation Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#home" aria-label="PrepPath home"><span class="brand-mark">P</span> PrepPath</a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav id="mainNav">
-      <a href="#home" class="nav-link active">Home</a>
-      <a href="#jobs" class="nav-link">Jobs</a>
-      <a href="#quiz" class="nav-link">Aptitude Quiz</a>
-      <a href="#interview" class="nav-link">Interview Prep</a>
-      <a href="#progress" class="nav-link">My Progress</a>
-    </nav>
-    <a class="top-cta" href="#quiz">Start Practicing <span>↗</span></a>
+  <!-- Canvas for Confetti particle celebration -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-container">
+      <a class="brand" href="#home" aria-label="PrepPath Pro home">
+        <span class="brand-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </span>
+        <div class="brand-text">
+          <span>PrepPath<span class="brand-badge">PRO</span></span>
+          <small class="brand-subtitle">Placement Portal</small>
+        </div>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="#home" class="nav-link active">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Home
+        </a>
+        <a href="#jobs" class="nav-link">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Jobs &amp; Tracker
+        </a>
+        <a href="#quiz" class="nav-link">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Aptitude &amp; Tech Quiz
+        </a>
+        <a href="#interview" class="nav-link">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Mock Interview
+        </a>
+        <a href="#resume" class="nav-link">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          ATS Resume
+        </a>
+        <a href="#cheatsheet" class="nav-link">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Cheat Sheets
+        </a>
+        <a href="#progress" class="nav-link">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Tracker &amp; Badges
+        </a>
+      </nav>
+
+      <div class="topbar-controls">
+        <!-- Audio / Sound FX Toggle -->
+        <button class="icon-btn" id="soundToggle" title="Toggle Sound Effects" aria-label="Toggle Sound Effects">
+          <span id="soundIcon">🔊</span>
+        </button>
+
+        <!-- Dark / Light Theme Toggle -->
+        <button class="icon-btn" id="themeToggle" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+          <span id="themeIcon">🌙</span>
+        </button>
+
+        <!-- Live Readiness Mini Badge -->
+        <a href="#progress" class="readiness-mini-badge" title="Live Placement Readiness Score">
+          <span class="badge-dot"></span>
+          <span id="navReadinessVal">0%</span>
+          <small>Ready</small>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
   </header>
 
   <main>
+    <!-- HERO SECTION -->
     <section class="hero section" id="home">
+      <div class="hero-bg-glow glow-1"></div>
+      <div class="hero-bg-glow glow-2"></div>
+
       <div class="hero-copy">
-        <div class="eyebrow"><span class="pulse"></span> YOUR PLACEMENT JOURNEY STARTS HERE</div>
-        <h1>Prepare today.<br><span>Get placed tomorrow.</span></h1>
-        <p class="hero-text">A simple space to explore opportunities, practice aptitude and build confidence for your next interview.</p>
+        <div class="eyebrow-pill">
+          <span class="pulse-dot"></span>
+          <span>CAMPUS PLACEMENTS 2026</span>
+          <span class="eyebrow-sparkle">✦</span>
+        </div>
+        <h1 class="hero-title">
+          Master the Skills.<br>
+          <span class="gradient-text">Crack Your Dream Placement.</span>
+        </h1>
+        <p class="hero-text">
+          An interactive, all-in-one preparation workstation. Practice timed aptitude challenges, simulate real interview questions with voice response, track job applications, optimize your resume for ATS, and level up daily.
+        </p>
+
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#quiz">Practice a quiz <span>→</span></a>
-          <a class="btn btn-secondary" href="#jobs">Explore opportunities</a>
+          <a class="btn btn-primary" href="#quiz">
+            <span>Start Practice Quiz</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn-secondary" href="#interview">
+            <span>Mock Interview Studio</span>
+            <span class="btn-subtext">Voice &amp; Cards</span>
+          </a>
+          <a class="btn btn-ghost" href="#resume">
+            <span>ATS Resume Scan ⚡</span>
+          </a>
         </div>
-        <div class="hero-note"><span class="avatar-stack"><i>A</i><i>S</i><i>+</i></span><span><strong>One step at a time.</strong><br>Small practice. Better confidence.</span></div>
+
+        <!-- Metric highlights -->
+        <div class="hero-kpi-grid">
+          <div class="kpi-item">
+            <span class="kpi-val" id="kpiQuestionsSolved">0</span>
+            <span class="kpi-lbl">Questions Solved</span>
+          </div>
+          <div class="kpi-divider"></div>
+          <div class="kpi-item">
+            <span class="kpi-val" id="kpiInterviewsMastered">0</span>
+            <span class="kpi-lbl">Topics Mastered</span>
+          </div>
+          <div class="kpi-divider"></div>
+          <div class="kpi-item">
+            <span class="kpi-val" id="kpiJobsTracked">0</span>
+            <span class="kpi-lbl">Jobs Tracked</span>
+          </div>
+          <div class="kpi-divider"></div>
+          <div class="kpi-item">
+            <span class="kpi-val highlight" id="kpiStreak">🔥 1 Day</span>
+            <span class="kpi-lbl">Prep Streak</span>
+          </div>
+        </div>
       </div>
+
+      <!-- Hero Visual: Interactive Readiness Radial Widget -->
       <div class="hero-visual">
-        <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
-        <div class="visual-card main-visual-card">
-          <div class="visual-card-top"><span class="tiny-label">YOUR WEEKLY GOAL</span><span class="status-dot">● On track</span></div>
-          <h3>Placement readiness</h3>
-          <div class="readiness-number"><strong id="heroProgress">0%</strong><span>completed</span></div>
-          <div class="progress-track"><span id="heroProgressBar" style="width:0%"></span></div>
-          <div class="visual-stats"><div><span class="stat-icon purple">✓</span><span><b id="heroTasks">0/5</b><small>Topics done</small></span></div><div><span class="stat-icon mint">✦</span><span><b id="heroQuizScore">—</b><small>Latest quiz</small></span></div></div>
+        <div class="readiness-card">
+          <div class="readiness-header">
+            <div class="readiness-tag">
+              <span class="status-indicator"></span>
+              LIVE READINESS GAUGE
+            </div>
+            <span class="tier-badge" id="readinessTierBadge">Explorer</span>
+          </div>
+
+          <div class="gauge-wrapper">
+            <svg class="radial-gauge" viewBox="0 0 160 160">
+              <circle class="gauge-bg" cx="80" cy="80" r="70" />
+              <circle class="gauge-fill" id="heroGaugeCircle" cx="80" cy="80" r="70" />
+            </svg>
+            <div class="gauge-center">
+              <span class="gauge-percentage" id="heroGaugePercent">0%</span>
+              <span class="gauge-label">Campus Ready</span>
+            </div>
+          </div>
+
+          <div class="readiness-breakdown">
+            <div class="breakdown-row">
+              <span class="b-label"><span class="color-dot dot-quiz"></span>Aptitude &amp; Tech Quiz</span>
+              <span class="b-val" id="heroBreakdownQuiz">0%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="b-label"><span class="color-dot dot-interview"></span>Interview Flashcards</span>
+              <span class="b-val" id="heroBreakdownInterview">0%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="b-label"><span class="color-dot dot-checklist"></span>Placement Checklist</span>
+              <span class="b-val" id="heroBreakdownTasks">0%</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="b-label"><span class="color-dot dot-jobs"></span>Opportunities Tracked</span>
+              <span class="b-val" id="heroBreakdownJobs">0%</span>
+            </div>
+          </div>
+
+          <div class="readiness-footer">
+            <small id="readinessAdvice">Complete quizzes and practice questions to elevate your readiness score!</small>
+          </div>
         </div>
-        <div class="floating-chip chip-top"><span class="chip-icon">✦</span><span><b>Keep learning</b><small>Your future self says thanks</small></span></div>
-        <div class="floating-chip chip-bottom"><span class="chip-icon green">✓</span><span><b>Progress saved</b><small>Right in your browser</small></span></div>
-        <div class="hero-spark spark-one">✳</div><div class="hero-spark spark-two">✦</div>
       </div>
     </section>
 
-    <section class="section quick-stats" aria-label="Portal overview">
-      <div class="quick-stat"><span class="quick-icon lavender">▤</span><div><strong>Explore</strong><small>Jobs & internships</small></div></div>
-      <div class="quick-stat"><span class="quick-icon peach">◎</span><div><strong>Practice</strong><small>Aptitude questions</small></div></div>
-      <div class="quick-stat"><span class="quick-icon mint">⌘</span><div><strong>Prepare</strong><small>Interview topics</small></div></div>
-      <div class="quick-stat"><span class="quick-icon blue">↗</span><div><strong>Improve</strong><small>Track your progress</small></div></div>
+    <!-- QUICK LAUNCH ACTIONS DOCK -->
+    <section class="section quick-dock-section">
+      <div class="quick-dock">
+        <a href="#jobs" class="dock-card">
+          <div class="dock-icon lavender">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <strong>Opportunity Hub</strong>
+            <small>Explore &amp; Track Applications</small>
+          </div>
+          <span class="dock-arrow">→</span>
+        </a>
+
+        <a href="#quiz" class="dock-card">
+          <div class="dock-icon amber">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <strong>Adaptive Quiz</strong>
+            <small>Timed Practice &amp; Explanations</small>
+          </div>
+          <span class="dock-arrow">→</span>
+        </a>
+
+        <a href="#interview" class="dock-card">
+          <div class="dock-icon emerald">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <strong>Interview Simulator</strong>
+            <small>Flashcards &amp; Voice Practice</small>
+          </div>
+          <span class="dock-arrow">→</span>
+        </a>
+
+        <a href="#resume" class="dock-card">
+          <div class="dock-icon cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div>
+            <strong>ATS Resume Checker</strong>
+            <small>Keyword Match &amp; Optimization</small>
+          </div>
+          <span class="dock-arrow">→</span>
+        </a>
+      </div>
     </section>
 
+    <!-- SECTION 1: JOBS & INTERNSHIP APPLICATION TRACKER -->
     <section class="section section-block" id="jobs">
-      <div class="section-heading">
-        <div><div class="eyebrow">FIND YOUR NEXT STEP</div><h2>Explore opportunities</h2><p>Sample listings to help you understand what employers look for.</p></div>
-        <span class="section-count" id="jobCount">6 opportunities</span>
+      <div class="section-header-row">
+        <div>
+          <div class="eyebrow-pill mini">CAREER OPPORTUNITIES &amp; TRACKER</div>
+          <h2 class="section-title">Verified Placement Roles &amp; Application Pipeline</h2>
+          <p class="section-desc">Search curated campus fresher &amp; internship roles. Track your pipeline stage from Applied to Offer.</p>
+        </div>
+        <div class="view-tabs" id="jobViewTabs">
+          <button class="view-tab active" data-view="all">All Roles (<span id="allJobsCount">0</span>)</button>
+          <button class="view-tab" data-view="bookmarked">Bookmarked (<span id="savedJobsCount">0</span>)</button>
+          <button class="view-tab" data-view="pipeline">My Pipeline (<span id="pipelineJobsCount">0</span>)</button>
+        </div>
       </div>
-      <div class="filter-row">
-        <label class="search-box"><span>⌕</span><input type="search" id="jobSearch" placeholder="Search role or company..." aria-label="Search jobs"></label>
-        <select id="jobTypeFilter" aria-label="Filter job type"><option value="all">All opportunities</option><option value="Internship">Internships</option><option value="Fresher">Fresher roles</option></select>
+
+      <!-- Search & Multi-Filter Bar -->
+      <div class="filter-panel">
+        <div class="search-input-box">
+          <svg class="search-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="jobSearch" placeholder="Search by role, company (e.g. Google, Frontend, Python)..." aria-label="Search jobs">
+          <button id="clearJobSearch" class="clear-btn hidden" title="Clear search">✕</button>
+        </div>
+
+        <div class="select-group">
+          <select id="jobRoleFilter" aria-label="Filter by Domain">
+            <option value="all">All Domains</option>
+            <option value="Software">Software Engineering</option>
+            <option value="Web">Web &amp; Full Stack</option>
+            <option value="Data">Data &amp; Analytics</option>
+            <option value="AI">AI &amp; Machine Learning</option>
+            <option value="Cloud">Cloud &amp; DevOps</option>
+          </select>
+
+          <select id="jobTypeFilter" aria-label="Filter by Job Type">
+            <option value="all">All Types</option>
+            <option value="Internship">Internship</option>
+            <option value="Fresher">Full-time Fresher</option>
+          </select>
+
+          <select id="jobLocationFilter" aria-label="Filter by Work Mode">
+            <option value="all">Any Work Mode</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="On-Site">On-Site</option>
+          </select>
+        </div>
       </div>
-      <div class="jobs-grid" id="jobsGrid"></div>
-      <p class="disclaimer">Demo content for academic use. Verify every vacancy and eligibility requirement on the employer's official website before applying.</p>
+
+      <!-- Jobs Grid -->
+      <div class="jobs-grid" id="jobsGrid">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+
+      <div class="disclaimer-banner">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Curated for student practice and application tracking. Always verify official eligibility criteria on company careers portals before applying.</span>
+      </div>
     </section>
 
+    <!-- SECTION 2: ADAPTIVE APTITUDE & TECH QUIZ ARENA -->
     <section class="section section-block quiz-section" id="quiz">
-      <div class="section-heading">
-        <div><div class="eyebrow">A LITTLE PRACTICE GOES A LONG WAY</div><h2>Quick aptitude challenge</h2><p>Try these questions and see how you do. No pressure—learn as you go.</p></div>
-        <div class="quiz-pill">⏱ <span id="quizTimer">Untimed</span></div>
-      </div>
-      <div class="quiz-layout">
-        <div class="quiz-card" id="quizCard">
-          <div class="quiz-topline"><span id="questionCounter">QUESTION 1 OF 5</span><span class="difficulty">BEGINNER</span></div>
-          <div class="quiz-progress-track"><span id="quizProgressBar"></span></div>
-          <h3 id="questionText">Loading question…</h3>
-          <div class="options-list" id="optionsList"></div>
-          <div class="quiz-footer"><span id="answerHint">Choose one answer</span><button class="btn btn-primary" id="nextQuestion" disabled>Next question →</button></div>
+      <div class="section-header-row">
+        <div>
+          <div class="eyebrow-pill mini">PLACEMENT TEST ARENA</div>
+          <h2 class="section-title">Aptitude, Core CS &amp; Coding Quiz</h2>
+          <p class="section-desc">Practice Quantitative Aptitude, Logical Reasoning, Web, DBMS &amp; DSA with instant explanations.</p>
         </div>
-        <aside class="quiz-side">
-          <div class="side-illustration">✎</div><h3>Practice makes progress.</h3><p>Answer each question, review your result and try again whenever you want.</p><div class="mini-metric"><span>Questions in this quiz</span><strong>05</strong></div><div class="mini-metric"><span>Best score saved</span><strong id="bestScore">—</strong></div>
+        <div class="quiz-status-pill">
+          <span class="quiz-mode-indicator">Mode: <strong id="activeQuizModeLabel">Practice (Untimed)</strong></span>
+        </div>
+      </div>
+
+      <!-- Quiz Configuration & Category Bar -->
+      <div class="quiz-controls-bar">
+        <div class="category-pills" id="quizCategoryPills">
+          <button class="cat-pill active" data-category="All">All Categories</button>
+          <button class="cat-pill" data-category="Aptitude">Quantitative</button>
+          <button class="cat-pill" data-category="Logical">Logical Reasoning</button>
+          <button class="cat-pill" data-category="DSA">DSA &amp; Coding</button>
+          <button class="cat-pill" data-category="Web">Web &amp; JavaScript</button>
+          <button class="cat-pill" data-category="DBMS">SQL &amp; DBMS</button>
+          <button class="cat-pill" data-category="CoreCS">Core CS (OS &amp; CN)</button>
+        </div>
+
+        <div class="quiz-settings-panel">
+          <div class="setting-item">
+            <label for="quizModeSelect">Mode:</label>
+            <select id="quizModeSelect">
+              <option value="practice">Practice (Learn with hints)</option>
+              <option value="timed">Timed Sprint (45s per Q)</option>
+              <option value="exam">Campus Assessment (Simulated)</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label for="quizCountSelect">Questions:</label>
+            <select id="quizCountSelect">
+              <option value="5">5 Questions</option>
+              <option value="10" selected>10 Questions</option>
+              <option value="15">15 Questions</option>
+            </select>
+          </div>
+          <button class="btn btn-outline-sm" id="btnRestartQuiz">Restart Session ↻</button>
+        </div>
+      </div>
+
+      <!-- Main Quiz Interactive Card -->
+      <div class="quiz-arena-layout">
+        <div class="quiz-main-card" id="quizCard">
+          <div class="quiz-header">
+            <div class="quiz-meta-left">
+              <span class="question-tracker" id="questionTracker">QUESTION 1 OF 10</span>
+              <span class="category-tag" id="currentCategoryTag">Aptitude</span>
+              <span class="difficulty-badge" id="currentDifficultyBadge">Medium</span>
+            </div>
+
+            <div class="quiz-meta-right">
+              <!-- Live Timer Display (Used in Timed Mode) -->
+              <div class="quiz-timer-pill" id="timerPill">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span id="quizTimerText">00:45</span>
+              </div>
+              <!-- Streak Pill -->
+              <div class="quiz-streak-pill" id="quizStreakPill" title="Consecutive correct answers">
+                🔥 <span id="quizStreakCount">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="quiz-progress-track">
+            <div class="quiz-progress-bar" id="quizProgressBar" style="width: 10%;"></div>
+          </div>
+
+          <!-- Question Content -->
+          <div class="quiz-body">
+            <h3 class="question-title" id="questionTitle">Loading question...</h3>
+            <div class="question-code-block hidden" id="questionCodeBlock">
+              <pre><code id="questionCode"></code></pre>
+            </div>
+
+            <!-- Options Grid -->
+            <div class="options-container" id="optionsContainer">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Lifeline / Hint Bar -->
+            <div class="lifeline-bar">
+              <button class="btn-lifeline" id="btnLifeline5050" title="Eliminate two wrong choices">
+                💡 50:50 Lifeline (<span id="lifelineCount">1</span> left)
+              </button>
+              <button class="btn-lifeline" id="btnToggleHint" title="Show helpful hint">
+                🔍 Need a Hint?
+              </button>
+            </div>
+
+            <div class="hint-box hidden" id="hintBox">
+              <strong>Hint:</strong> <span id="hintText"></span>
+            </div>
+
+            <!-- Feedback / Explanation Block -->
+            <div class="explanation-box hidden" id="explanationBox">
+              <div class="exp-header" id="expHeader"></div>
+              <p class="exp-body" id="expBody"></p>
+            </div>
+          </div>
+
+          <!-- Quiz Bottom Navigation -->
+          <div class="quiz-footer-nav">
+            <button class="btn btn-secondary-sm" id="btnPrevQuestion" disabled>← Previous</button>
+            <div class="footer-center-info">
+              <span id="answeredStats">0 of 10 answered</span>
+            </div>
+            <button class="btn btn-primary" id="btnNextQuestion">Next Question →</button>
+          </div>
+        </div>
+
+        <!-- Quiz Side Palette & Stats -->
+        <aside class="quiz-sidebar">
+          <div class="sidebar-box">
+            <div class="sidebar-box-title">Question Navigator</div>
+            <div class="question-palette-grid" id="questionPaletteGrid">
+              <!-- Numbered pills generated dynamically -->
+            </div>
+            <div class="palette-legend">
+              <span><span class="legend-dot dot-current"></span> Current</span>
+              <span><span class="legend-dot dot-answered"></span> Answered</span>
+              <span><span class="legend-dot dot-unvisited"></span> Unanswered</span>
+            </div>
+          </div>
+
+          <div class="sidebar-box session-stats-box">
+            <div class="sidebar-box-title">Session Performance</div>
+            <div class="mini-stat-row">
+              <span>Accuracy So Far</span>
+              <strong id="sessionAccuracy">0%</strong>
+            </div>
+            <div class="mini-stat-row">
+              <span>Best Overall Score</span>
+              <strong id="bestOverallScore">—</strong>
+            </div>
+            <div class="mini-stat-row">
+              <span>Total Tests Taken</span>
+              <strong id="totalTestsTaken">0</strong>
+            </div>
+          </div>
         </aside>
       </div>
-      <div class="quiz-result hidden" id="quizResult" aria-live="polite"></div>
+
+      <!-- Quiz Results Modal / Overlay -->
+      <div class="quiz-results-card hidden" id="quizResultsCard">
+        <div class="results-header">
+          <div class="results-badge" id="resultsBadge">Assessment Complete!</div>
+          <h3 id="resultsTitle">Great Effort!</h3>
+          <p id="resultsSub">Here is how you performed in this placement challenge.</p>
+        </div>
+
+        <div class="results-score-row">
+          <div class="score-circle-wrapper">
+            <svg class="score-circle-svg" viewBox="0 0 120 120">
+              <circle class="score-bg" cx="60" cy="60" r="52" />
+              <circle class="score-fill" id="resultsScoreCircle" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="score-center-val">
+              <span id="resultsScoreVal">0%</span>
+              <small>Score</small>
+            </div>
+          </div>
+
+          <div class="score-metrics-grid">
+            <div class="m-card">
+              <span class="m-val" id="resCorrectCount">0</span>
+              <span class="m-lbl">Correct Answers</span>
+            </div>
+            <div class="m-card">
+              <span class="m-val" id="resWrongCount">0</span>
+              <span class="m-lbl">Wrong Answers</span>
+            </div>
+            <div class="m-card">
+              <span class="m-val" id="resTimeTaken">00:00</span>
+              <span class="m-lbl">Time Elapsed</span>
+            </div>
+            <div class="m-card">
+              <span class="m-val" id="resPercentile">85th</span>
+              <span class="m-lbl">Est. Percentile</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-actions">
+          <button class="btn btn-primary" id="btnRetakeFullQuiz">Retake Entire Quiz ↻</button>
+          <button class="btn btn-secondary" id="btnRetryWrongOnly">Practice Missed Only 🎯</button>
+          <button class="btn btn-ghost" id="btnReviewAllAnswers">Detailed Answer Key 📖</button>
+        </div>
+
+        <!-- Detailed Answer Sheet Drawer -->
+        <div class="answer-key-section hidden" id="answerKeySection">
+          <h4>Detailed Question Review &amp; Explanations</h4>
+          <div class="review-items-list" id="reviewItemsList"></div>
+        </div>
+      </div>
     </section>
 
+    <!-- SECTION 3: INTERACTIVE MOCK INTERVIEW & FLASHCARD STUDIO -->
     <section class="section section-block" id="interview">
-      <div class="section-heading">
-        <div><div class="eyebrow">GET READY TO SPEAK WITH CONFIDENCE</div><h2>Interview preparation</h2><p>Browse beginner-friendly questions by topic. Tap a question to reveal its answer.</p></div>
+      <div class="section-header-row">
+        <div>
+          <div class="eyebrow-pill mini">ORAL &amp; TECHNICAL DRILLS</div>
+          <h2 class="section-title">Interactive Mock Interview &amp; Flashcards</h2>
+          <p class="section-desc">Master the most frequently asked technical, behavioral (STAR method), and system questions.</p>
+        </div>
+        <div class="interview-mode-toggle">
+          <button class="int-mode-btn active" id="btnModeFlashcards">🎴 Flashcard Mode</button>
+          <button class="int-mode-btn" id="btnModeOral">🎙️ Oral Speech Practice</button>
+        </div>
       </div>
-      <div class="topic-tabs" id="topicTabs"><button class="topic-tab active" data-topic="All">All topics</button><button class="topic-tab" data-topic="Web Development">Web Development</button><button class="topic-tab" data-topic="JavaScript">JavaScript</button><button class="topic-tab" data-topic="SQL">SQL</button><button class="topic-tab" data-topic="HR">HR</button></div>
-      <div class="interview-list" id="interviewList"></div>
+
+      <!-- Interview Topic Tabs & Search -->
+      <div class="interview-filter-row">
+        <div class="interview-topics-scroll" id="interviewTopicTabs">
+          <button class="topic-pill active" data-topic="All">All Topics</button>
+          <button class="topic-pill" data-topic="Web">Web &amp; Frontend</button>
+          <button class="topic-pill" data-topic="Backend">Backend &amp; System</button>
+          <button class="topic-pill" data-topic="SQL">SQL &amp; Databases</button>
+          <button class="topic-pill" data-topic="CoreCS">OS &amp; Networks</button>
+          <button class="topic-pill" data-topic="HR">HR &amp; Behavioral (STAR)</button>
+        </div>
+
+        <div class="interview-right-actions">
+          <input type="search" id="interviewSearch" class="search-input-sm" placeholder="Search interview questions...">
+          <button class="btn btn-outline-sm" id="btnOpenAddQuestionModal">+ Custom Question</button>
+        </div>
+      </div>
+
+      <!-- Flashcards View -->
+      <div class="flashcard-view" id="flashcardView">
+        <div class="flashcard-status-bar">
+          <span id="flashcardCounter">Card 1 of 18</span>
+          <div class="mastery-summary">
+            <span class="tag-mastered">✓ Mastered: <b id="masteredCount">0</b></span>
+            <span class="tag-revision">↻ Need Practice: <b id="revisionCount">0</b></span>
+          </div>
+        </div>
+
+        <div class="flashcard-container" id="flashcardContainer">
+          <div class="flashcard" id="activeFlashcard">
+            <div class="flashcard-inner">
+              <!-- FRONT FACE -->
+              <div class="card-face card-front">
+                <div class="card-top-tags">
+                  <span class="card-domain-badge" id="fcDomain">Topic</span>
+                  <span class="company-tag" id="fcCompany">Company Ask</span>
+                </div>
+                <div class="card-center">
+                  <span class="card-instruction">QUESTION</span>
+                  <h3 class="card-question-text" id="fcQuestion">Question title goes here...</h3>
+                  <div class="card-hint-text" id="fcHint">💡 Click card or flip button to reveal answer &amp; structure</div>
+                </div>
+                <div class="card-bottom-actions">
+                  <button class="btn-flip" id="btnFlipCard">Flip to See Answer ↺</button>
+                  <button class="btn-voice-listen" id="btnSpeakQuestion" title="Listen to question spoken aloud">
+                    🔊 Listen Question
+                  </button>
+                </div>
+              </div>
+
+              <!-- BACK FACE -->
+              <div class="card-face card-back">
+                <div class="card-top-tags">
+                  <span class="card-domain-badge">MODEL ANSWER</span>
+                  <span class="company-tag">Key Takeaways</span>
+                </div>
+                <div class="card-answer-scroll">
+                  <h4 id="fcAnswerQuestion">Question summary</h4>
+                  <div class="card-answer-content" id="fcAnswer">
+                    Answer content
+                  </div>
+                  <div class="pro-tips-box">
+                    <strong>💡 Interviewer Pro Tip:</strong>
+                    <span id="fcTip">Always structure your answer using clear bullet points and give a real project example.</span>
+                  </div>
+                </div>
+                <div class="card-bottom-actions back-actions">
+                  <button class="btn-mark-revision" id="btnMarkRevision">
+                    ↻ Need Revision
+                  </button>
+                  <button class="btn-flip-back" id="btnFlipBack">
+                    ↺ Flip to Front
+                  </button>
+                  <button class="btn-mark-mastered" id="btnMarkMastered">
+                    ✓ Mastered
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flashcard Carousel Controls -->
+        <div class="flashcard-nav-controls">
+          <button class="btn btn-secondary-sm" id="btnPrevCard">← Previous Card</button>
+          <button class="btn btn-secondary-sm" id="btnShuffleCards">🔀 Shuffle Deck</button>
+          <button class="btn btn-primary" id="btnNextCard">Next Card →</button>
+        </div>
+      </div>
+
+      <!-- Oral Speech Practice View (Hidden by default, activated via button) -->
+      <div class="oral-practice-view hidden" id="oralPracticeView">
+        <div class="oral-hero-box">
+          <div class="oral-question-box">
+            <span class="oral-tag">CURRENT PRACTICE QUESTION</span>
+            <h3 id="oralQuestionTitle">Tell me about a challenging project and how you handled obstacles.</h3>
+            <p class="oral-helper">Speak clearly for 60-90 seconds. Structure your response using the STAR format (Situation, Task, Action, Result).</p>
+          </div>
+
+          <div class="oral-mic-controls">
+            <button class="mic-toggle-btn" id="btnMicToggle">
+              <span class="mic-icon">🎙️</span>
+              <span id="micBtnLabel">Start Recording Answer</span>
+            </button>
+            <div class="recording-timer" id="recordingTimer">00:00</div>
+          </div>
+
+          <div class="transcript-display-box">
+            <div class="transcript-header">
+              <span>LIVE SPEECH TRANSCRIPTION</span>
+              <span class="pace-indicator" id="speakingPace">Pace: Normal</span>
+            </div>
+            <div class="transcript-text" id="transcriptText">
+              Press "Start Recording Answer" and begin speaking. Your voice will transcribe here in real time...
+            </div>
+            <div class="transcript-footer">
+              <span id="wordCountLabel">Words spoken: 0</span>
+              <button class="btn-copy-sm" id="btnCopyTranscript">Copy Transcript</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interview Questions List View (Searchable accordion below) -->
+      <div class="accordion-section">
+        <h4 class="sub-heading">Browse All Questions by Category (<span id="filteredQuestionCount">0</span>)</h4>
+        <div class="interview-accordion-list" id="interviewAccordionList"></div>
+      </div>
     </section>
 
+    <!-- SECTION 4: INTERACTIVE RESUME ATS SCANNER & OPTIMIZER -->
+    <section class="section section-block" id="resume">
+      <div class="section-header-row">
+        <div>
+          <div class="eyebrow-pill mini">RESUME &amp; ATS OPTIMIZER</div>
+          <h2 class="section-title">Campus ATS Match &amp; Keyword Analyzer</h2>
+          <p class="section-desc">Paste your resume content or bullet points to calculate your placement ATS score and identify missing high-impact keywords.</p>
+        </div>
+        <button class="btn btn-outline-sm" id="btnLoadSampleResume">Load Sample Resume 📝</button>
+      </div>
+
+      <div class="ats-grid">
+        <div class="ats-input-card">
+          <div class="ats-target-row">
+            <label for="atsTargetRole">Target Role:</label>
+            <select id="atsTargetRole">
+              <option value="fullstack">Full Stack Developer</option>
+              <option value="frontend">Frontend Engineer (React/JS)</option>
+              <option value="backend">Backend Engineer (Java/Python/Node)</option>
+              <option value="data">Data Analyst / Data Scientist</option>
+              <option value="cloud">DevOps &amp; Cloud Engineer</option>
+            </select>
+          </div>
+
+          <textarea id="atsResumeText" class="ats-textarea" placeholder="Paste your resume text, project summaries, technical skills, and experience here... (e.g. Developed a full-stack e-commerce app using React, Node.js, MongoDB...)"></textarea>
+
+          <div class="ats-input-actions">
+            <button class="btn btn-primary" id="btnScanResume">
+              <span>Scan &amp; Calculate ATS Score</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            </button>
+            <button class="btn btn-secondary-sm" id="btnClearResume">Clear</button>
+          </div>
+        </div>
+
+        <div class="ats-results-card" id="atsResultsCard">
+          <div class="ats-score-display">
+            <div class="ats-ring-wrap">
+              <svg class="ats-ring-svg" viewBox="0 0 120 120">
+                <circle class="ats-ring-bg" cx="60" cy="60" r="50" />
+                <circle class="ats-ring-fill" id="atsScoreRing" cx="60" cy="60" r="50" />
+              </svg>
+              <div class="ats-ring-content">
+                <strong id="atsScorePercent">0%</strong>
+                <small>ATS Match</small>
+              </div>
+            </div>
+
+            <div class="ats-score-summary">
+              <h4 id="atsVerdict">Ready for Analysis</h4>
+              <p id="atsSummaryText">Select your target role and paste your resume text to see your match score, missing keywords, and recommendations.</p>
+            </div>
+          </div>
+
+          <div class="ats-metrics-row">
+            <div class="ats-m-box">
+              <span class="m-title">Action Verbs</span>
+              <strong id="atsVerbsFound">0 Found</strong>
+            </div>
+            <div class="ats-m-box">
+              <span class="m-title">Impact Numbers</span>
+              <strong id="atsMetricsFound">0 Detected</strong>
+            </div>
+            <div class="ats-m-box">
+              <span class="m-title">Word Count</span>
+              <strong id="atsWordCount">0 Words</strong>
+            </div>
+          </div>
+
+          <!-- Matched and Missing Keywords -->
+          <div class="ats-keywords-section">
+            <div class="kw-block">
+              <h5>✅ Matched Keywords:</h5>
+              <div class="kw-pills-list matched" id="matchedKeywordsList">
+                <span class="empty-hint">None detected yet</span>
+              </div>
+            </div>
+            <div class="kw-block">
+              <h5>⚠️ Recommended Missing Keywords:</h5>
+              <div class="kw-pills-list missing" id="missingKeywordsList">
+                <span class="empty-hint">Paste resume to identify gaps</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE DSA & PLACEMENT CHEAT SHEETS -->
+    <section class="section section-block" id="cheatsheet">
+      <div class="section-header-row">
+        <div>
+          <div class="eyebrow-pill mini">RAPID REVISION DESK</div>
+          <h2 class="section-title">Campus Placement Cheat Sheets</h2>
+          <p class="section-desc">Quick-reference tables for Big-O Complexity, Top 10 SQL Interview Queries, and the STAR Method Builder.</p>
+        </div>
+        <div class="cheatsheet-tabs" id="cheatsheetTabs">
+          <button class="cs-tab active" data-tab="bigo">⏱ Big-O Complexity</button>
+          <button class="cs-tab" data-tab="sql">🗄 Top SQL Queries</button>
+          <button class="cs-tab" data-tab="oop">🧱 OOP in 60 Seconds</button>
+          <button class="cs-tab" data-tab="star">🌟 STAR Answer Builder</button>
+        </div>
+      </div>
+
+      <div class="cheatsheet-content-box">
+        <!-- TAB 1: BIG-O COMPLEXITY -->
+        <div class="cs-tab-pane active" id="paneBigo">
+          <div class="table-responsive">
+            <table class="cs-table">
+              <thead>
+                <tr>
+                  <th>Data Structure / Algorithm</th>
+                  <th>Average Access</th>
+                  <th>Average Search</th>
+                  <th>Average Insertion</th>
+                  <th>Average Deletion</th>
+                  <th>Worst Space</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Array</strong></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                  <td><span class="c-badge green">O(N)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Singly Linked List</strong></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge green">O(N)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Stack / Queue</strong></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge green">O(N)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Hash Table (HashMap)</strong></td>
+                  <td><span class="c-badge gray">N/A</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                  <td><span class="c-badge green">O(N)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Binary Search Tree (BST)</strong></td>
+                  <td><span class="c-badge blue">O(log N)</span></td>
+                  <td><span class="c-badge blue">O(log N)</span></td>
+                  <td><span class="c-badge blue">O(log N)</span></td>
+                  <td><span class="c-badge blue">O(log N)</span></td>
+                  <td><span class="c-badge green">O(N)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Binary Search (Algorithm)</strong></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge blue">O(log N)</span></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge green">O(1)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Quick Sort</strong></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge blue">O(N log N)</span></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge blue">O(log N)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Merge Sort</strong></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge blue">O(N log N)</span></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge gray">—</span></td>
+                  <td><span class="c-badge yellow">O(N)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 2: SQL INTERVIEW QUERIES -->
+        <div class="cs-tab-pane" id="paneSql">
+          <div class="sql-queries-grid" id="sqlQueriesGrid">
+            <!-- Dynamically populated with copy buttons -->
+          </div>
+        </div>
+
+        <!-- TAB 3: OOP IN 60 SECONDS -->
+        <div class="cs-tab-pane" id="paneOop">
+          <div class="oop-cards-grid">
+            <div class="oop-card">
+              <h4>1. Encapsulation</h4>
+              <p>Bundling data and methods into a single unit (class) and restricting direct access to object internals using private variables &amp; getters/setters.</p>
+              <code>class Employee { private int salary; public int getSalary() { return salary; } }</code>
+            </div>
+            <div class="oop-card">
+              <h4>2. Abstraction</h4>
+              <p>Hiding complex internal implementation details and exposing only essential interfaces to the user (e.g. abstract classes and interfaces).</p>
+              <code>interface Database { void connect(); void query(String sql); }</code>
+            </div>
+            <div class="oop-card">
+              <h4>3. Inheritance</h4>
+              <p>Mechanism where a child class derives attributes and methods from an existing parent class, enabling code reuse and hierarchical classification.</p>
+              <code>class Dog extends Animal { void bark() { System.out.println("Woof"); } }</code>
+            </div>
+            <div class="oop-card">
+              <h4>4. Polymorphism</h4>
+              <p>Ability of a message/method to be processed in more than one form. <em>Compile-time:</em> Method Overloading. <em>Runtime:</em> Method Overriding.</p>
+              <code>class Shape { void draw(); } class Circle extends Shape { void draw(); }</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: STAR ANSWER BUILDER -->
+        <div class="cs-tab-pane" id="paneStar">
+          <div class="star-builder-grid">
+            <div class="star-form">
+              <h4>Interactive STAR Response Generator</h4>
+              <p>Use the STAR formula (Situation, Task, Action, Result) preferred by top tech recruiters (Google, Amazon, Microsoft, TCS Digital).</p>
+
+              <div class="form-group">
+                <label><strong>S - Situation:</strong> Set the scene (context, company, project)</label>
+                <input type="text" id="starSituation" placeholder="e.g. During my final year capstone project, our web app crashed under 50 simultaneous users...">
+              </div>
+              <div class="form-group">
+                <label><strong>T - Task:</strong> What was your specific goal or responsibility?</label>
+                <input type="text" id="starTask" placeholder="e.g. I was tasked with diagnosing the bottleneck and reducing database query response times...">
+              </div>
+              <div class="form-group">
+                <label><strong>A - Action:</strong> What exact steps did YOU take?</label>
+                <input type="text" id="starAction" placeholder="e.g. I implemented Redis caching, optimized SQL indexes, and debounced API requests...">
+              </div>
+              <div class="form-group">
+                <label><strong>R - Result:</strong> Measurable outcome and what you learned</label>
+                <input type="text" id="starResult" placeholder="e.g. Query latency dropped by 65% and the app successfully handled 500+ concurrent requests...">
+              </div>
+
+              <button class="btn btn-primary" id="btnGenerateStar">Generate Structured Interview Answer ✨</button>
+            </div>
+
+            <div class="star-output-box">
+              <h4>Structured Answer Preview</h4>
+              <div class="formatted-star-result" id="formattedStarResult">
+                Fill in the four fields on the left and click "Generate Structured Interview Answer" to preview and copy your polished response.
+              </div>
+              <button class="btn btn-secondary-sm hidden" id="btnCopyStar">Copy Answer to Clipboard 📋</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: COMMAND CENTER: CHECKLIST & GAMIFIED ACHIEVEMENTS -->
     <section class="section section-block progress-section" id="progress">
-      <div class="section-heading">
-        <div><div class="eyebrow">YOUR GROWTH, YOUR PACE</div><h2>My preparation tracker</h2><p>Tick off each step as you complete it. Your progress is saved on this device.</p></div>
-        <button class="btn btn-secondary reset-btn" id="resetProgress">Reset progress</button>
+      <div class="section-header-row">
+        <div>
+          <div class="eyebrow-pill mini">COMMAND CENTER</div>
+          <h2 class="section-title">Preparation Roadmap &amp; Achievements</h2>
+          <p class="section-desc">Track tasks, unlock placement badges, and export your personal preparation report.</p>
+        </div>
+        <div class="header-action-group">
+          <button class="btn btn-outline-sm" id="btnExportReport">📥 Export Prep Report</button>
+          <button class="btn btn-secondary-sm reset-btn" id="resetProgress">Reset All Data</button>
+        </div>
       </div>
+
       <div class="progress-layout">
-        <div class="tracker-card"><div class="tracker-heading"><div><h3>Placement checklist</h3><p>Build a little momentum every day.</p></div><strong id="progressLabel">0%</strong></div><div class="progress-track large"><span id="progressBar"></span></div><div class="checklist" id="checklist"></div></div>
-        <div class="motivation-card"><div class="motivation-star">✦</div><div class="eyebrow">A REMINDER FOR YOU</div><h3>You don't have to know everything. You just have to keep learning.</h3><p>Consistency beats last-minute stress. Celebrate every small win.</p><span class="motivation-sign">— Your PrepPath buddy</span></div>
+        <!-- Interactive Checklist Card -->
+        <div class="tracker-card">
+          <div class="tracker-heading">
+            <div>
+              <h3>Placement Action Roadmap</h3>
+              <p>Tick off completed milestones or add your own custom goals.</p>
+            </div>
+            <strong class="tracker-percent-label" id="progressLabel">0%</strong>
+          </div>
+
+          <div class="progress-track large">
+            <span id="progressBar" style="width: 0%;"></span>
+          </div>
+
+          <!-- Add Custom Task Input -->
+          <div class="add-task-row">
+            <input type="text" id="customTaskInput" placeholder="Add custom goal (e.g. Solve 3 LeetCode DP problems)..." aria-label="New task">
+            <button class="btn btn-primary-sm" id="btnAddCustomTask">+ Add</button>
+          </div>
+
+          <!-- Checklist Container -->
+          <div class="checklist" id="checklist">
+            <!-- Dynamic checkboxes -->
+          </div>
+        </div>
+
+        <!-- Badges & Gamification Showcase -->
+        <div class="achievements-card">
+          <div class="achievements-header">
+            <div>
+              <span class="motivation-star">🏆</span>
+              <h3>Placement Badges</h3>
+            </div>
+            <span class="badge-counter"><span id="unlockedBadgeCount">0</span> of 8 Unlocked</span>
+          </div>
+          <p class="badge-subtitle">Earn badges by completing challenges, quizzes, and tracking your job search.</p>
+
+          <div class="badges-grid" id="badgesGrid">
+            <!-- Dynamic Badges -->
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="bottom-cta section"><div><div class="eyebrow">READY FOR YOUR NEXT STEP?</div><h2>Your future is built one skill at a time.</h2><p>Choose a topic, practice a question and keep moving forward.</p></div><a href="#quiz" class="btn btn-light">Take a quick quiz ↗</a></section>
+    <!-- BOTTOM MOTIVATION CTA -->
+    <section class="bottom-cta section">
+      <div class="cta-inner">
+        <div class="eyebrow-pill light">YOUR DREAM JOB IS WITHIN REACH</div>
+        <h2>One question today. An offer letter tomorrow.</h2>
+        <p>Consistent daily practice outperforms last-minute cramming every single time.</p>
+        <div class="cta-btns">
+          <a href="#quiz" class="btn btn-light">Take a 5-Minute Quiz ↗</a>
+          <a href="#interview" class="btn btn-outline-light">Practice Flashcards</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer"><a class="brand" href="#home"><span class="brand-mark">P</span> PrepPath</a><p>A student placement preparation mini project built with HTML, CSS & JavaScript.</p><span>Made for learning · © <span id="year"></span> PrepPath</span></footer>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col brand-col">
+        <a class="brand" href="#home">
+          <span class="brand-mark">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </span>
+          <span>PrepPath <b>PRO</b></span>
+        </a>
+        <p class="footer-desc">A comprehensive, fully interactive placement preparation workstation designed for engineering, MCA, and BCA students.</p>
+        <span class="local-notice">🔒 All your quizzes, scores, tasks, and applications are saved safely in your browser's Local Storage.</span>
+      </div>
+
+      <div class="footer-col">
+        <h4>Modules</h4>
+        <ul>
+          <li><a href="#jobs">Job Board &amp; Tracker</a></li>
+          <li><a href="#quiz">Adaptive Practice Quiz</a></li>
+          <li><a href="#interview">Mock Interview Studio</a></li>
+          <li><a href="#resume">ATS Resume Optimizer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#cheatsheet">Big-O Cheat Sheet</a></li>
+          <li><a href="#cheatsheet">Top SQL Queries</a></li>
+          <li><a href="#cheatsheet">STAR Response Guide</a></li>
+          <li><a href="#progress">Roadmap &amp; Badges</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>Built for student success · &copy; <span id="year">2026</span> PrepPath Pro. All rights reserved.</span>
+      <div class="footer-links">
+        <button id="btnQuickReset" class="text-link">Clear Storage</button>
+        <a href="#home" class="text-link">Back to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- UNIVERSAL MODAL CONTAINER -->
+  <div class="modal-backdrop hidden" id="universalModalBackdrop">
+    <div class="modal-window" id="universalModal">
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">✕</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-hub" id="toastHub" role="status" aria-live="polite"></div>
+
+  <!-- MAIN JAVASCRIPT LOGIC -->
   <script src="script.js"></script>
 </body>
 </html>
